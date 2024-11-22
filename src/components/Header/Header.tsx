@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 
-import ThemeContext from "@/app/context/themeContext";
+import ThemeContext from "@/src/context/themeContext";
 
 const Header = () => {
   const { darkTheme, setDarkTheme } = useContext(ThemeContext);
