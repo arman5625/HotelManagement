@@ -14,12 +14,14 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { getStripe } from "@/src/libs/stripe";
+import React from "react";
 
-const RoomDetails = (props: { params: { slug: string } }) => {
-  const {
-    params: { slug },
-  } = props;
+const RoomDetails = (props: { params: Promise<{ slug: string }> }) => {
+  const { params } = props;
 
+  // Unwrap `params` Promise
+  const { slug } = React.use(params);
+  
   if (!slug) {
     throw new Error("Error: Missing room slug");
   }
