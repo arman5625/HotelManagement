@@ -1,11 +1,12 @@
 'use client';
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
 import {signUp} from "next-auth-sanity/client"
 import {signIn, useSession} from "next-auth/react"
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const defaultFormData = {
     email: '',
@@ -25,12 +26,16 @@ const Auth = () => {
     };
 
     const { data: session } = useSession();
+    const router = useRouter();
 
-    console.log(session);
+    useEffect(() => {
+        if(session) router.push("/");
+    }, [router, session]);
 
     const loginHandler = async() => {
         try{
             await signIn();
+            router.push("/")
             // push the user to home page
         } catch(error){
             console.log(error);

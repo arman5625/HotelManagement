@@ -21,6 +21,24 @@ export const authOptions: NextAuthOptions ={
     },
     adapter: SanityAdapter(sanityClient),
     debug: process.env.Node_ENV === "development",
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
+    callbacks: {
+        session: async ({ session, token }) => {
+            const userEmail = token.email;
+            const userIdObj = await sanityClient.fetch<{ _id: string }>(
+                `*[_type == "user" && email == $email][0]{ _id }`,
+                { email: userEmail }
+            );
+            console.log("user", userIdObj);
+
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: userIdObj?._id || null,
+                },
+            };
+        },
+    },
 
 }
