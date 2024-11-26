@@ -1,9 +1,13 @@
+type slug = {
+  current: string;
+}
+
 export type Booking = {
   _id: string;
   hotelRoom: {
     _id: string;
     name: string;
-    slug: string;
+    slug: slug;
     price: number;
   };
   checkinDate: string;

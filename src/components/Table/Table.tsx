@@ -3,13 +3,14 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
 
 import { Booking } from '@/src/models/booking';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 type Props = {
 bookingDetails:Booking[];
 setRoomId: Dispatch<SetStateAction<string | null>>;
+toggleRatingModal: () => void
 }
-const  Table: FC<Props> = ({ bookingDetails, setRoomId })=> {
+const  Table: FC<Props> = ({ bookingDetails, setRoomId, toggleRatingModal })=> {
 
     const router =  useRouter();
 
@@ -24,6 +25,7 @@ const  Table: FC<Props> = ({ bookingDetails, setRoomId })=> {
                     <th className='px-6 py-3'> Discount</th>
                     <th className='px-6 py-3'> No. Days Booked</th>
                     <th className='px-6 py-3'> Days Left</th>
+                    <th className='px-6 py-3'> </th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +34,7 @@ const  Table: FC<Props> = ({ bookingDetails, setRoomId })=> {
                         key={booking._id}
                         className='bg-white border-b hover:bg-gray-50'
                         >
-                            <th onClick={() =>router.push(`/rooms/${booking.hotelRoom.slug}`)
+                            <th onClick={() =>router.push(`/rooms/${booking.hotelRoom.slug.current}`)
                         } 
                         className='px-6 underline text-blue-600 cursor-pointer py-4 font-medium whitespace-nowrap'
                         >
@@ -46,7 +48,8 @@ const  Table: FC<Props> = ({ bookingDetails, setRoomId })=> {
                         <td className='px-6 py-4'>
                             <button 
                                 onClick={() => {
-                                    setRoomId(booking.hotelRoom._id)
+                                    setRoomId(booking.hotelRoom._id);
+                                    toggleRatingModal()
                                 }}
                                 className='font-medium text-blue-600 hover:underline'>
                                 Rate

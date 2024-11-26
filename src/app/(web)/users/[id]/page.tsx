@@ -14,6 +14,8 @@ import LoadingSpinner from "../../loading";
 import { BsJournalBookmarkFill } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 import Table from "@/src/components/Table/Table";
+import Chart from "@/src/components/Chart/Chart";
+import RatingModal from "@/src/components/RatingModal/RatingModal";
 
 const UserDetails = (props: { params: Promise<{ id: string }> }) => {
   const { params } = props;
@@ -22,6 +24,9 @@ const UserDetails = (props: { params: Promise<{ id: string }> }) => {
 
   const [currentNav,setCurrentNav] = useState<'bookings' | 'amount' | 'ratings'>('bookings');
   const [roomId, setRoomId] = useState<string | null>(null);
+  const [isRatingVisible, setIsRatingVisible] = useState<boolean>(false);
+
+  const toggleRatingModal = () => setIsRatingVisible(prevState => !prevState)
 
   const fetchUserBooking = async () => getUserBookings(userId);
   const fetchUserData = async () => {
@@ -138,11 +143,15 @@ const UserDetails = (props: { params: Promise<{ id: string }> }) => {
                 </ol>
             </nav>
 
-            {currentNav === "bookings"? userBookings && <><Table bookingDetails={userBookings} setRoomId={setRoomId}/></> : <></>}
+            {currentNav === "bookings"? (userBookings && <Table bookingDetails={userBookings} setRoomId={setRoomId} toggleRatingModal={toggleRatingModal}/>)
+            : (
+            <></>
+            )}
+
+            {currentNav === "amount" ? userBookings && <Chart userBookings={userBookings}/> : <></>}
         </div>
-
-
       </div>
+      <RatingModal isOpen={isRatingVisible}/>
     </div>
   );
 };
