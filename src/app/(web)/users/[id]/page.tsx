@@ -16,6 +16,8 @@ import { GiMoneyStack } from "react-icons/gi";
 import Table from "@/src/components/Table/Table";
 import Chart from "@/src/components/Chart/Chart";
 import RatingModal from "@/src/components/RatingModal/RatingModal";
+import BackDrop from "@/src/components/BackDrop/BackDrop";
+import toast from "react-hot-toast";
 
 const UserDetails = (props: { params: Promise<{ id: string }> }) => {
   const { params } = props;
@@ -25,6 +27,9 @@ const UserDetails = (props: { params: Promise<{ id: string }> }) => {
   const [currentNav,setCurrentNav] = useState<'bookings' | 'amount' | 'ratings'>('bookings');
   const [roomId, setRoomId] = useState<string | null>(null);
   const [isRatingVisible, setIsRatingVisible] = useState<boolean>(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState<boolean>(false);
+  const [ratingValue, setRatingValue] = useState<number>(0);
+  const [ratingText, setRatingText] = useState<string>("");
 
   const toggleRatingModal = () => setIsRatingVisible(prevState => !prevState)
 
@@ -53,6 +58,16 @@ const UserDetails = (props: { params: Promise<{ id: string }> }) => {
   if (loadingUserData) return <LoadingSpinner />;
   if (!userData) throw new Error("Cannot Fetch data");
   console.log("userData", userData);
+
+  const reviewSubmitHandler = async () => {
+    console.log(ratingText, ratingValue);
+    if(!ratingText.trim().length || !ratingValue) {
+      return toast.error("pleasea provide a rating text and a rating");
+    }
+    // setIsSubmittingReview(true);
+
+  }
+
   return (
     <div className="container mx-auto px-2 md:px-4 py-10">
       <div className="grid md:grid-cols-12 gap-10">
@@ -151,7 +166,18 @@ const UserDetails = (props: { params: Promise<{ id: string }> }) => {
             {currentNav === "amount" ? userBookings && <Chart userBookings={userBookings}/> : <></>}
         </div>
       </div>
-      <RatingModal isOpen={isRatingVisible}/>
+      <RatingModal 
+        isOpen={isRatingVisible} 
+        ratingValue={ratingValue} 
+        setRatingValue={setRatingValue} 
+        ratingText={ratingText} 
+        setRatingText={setRatingText}
+        isSubmittingReview = {isSubmittingReview}
+        setIsSubmittingReview={setIsSubmittingReview}
+        reviewSubmitHandler={reviewSubmitHandler}
+        toggleRatingModal={toggleRatingModal}
+        />
+      <BackDrop isOpen={isRatingVisible} />
     </div>
   );
 };
