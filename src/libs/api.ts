@@ -116,7 +116,7 @@ export async function getUserData(userId: string) {
 }
 
 export async function checkReviewExists(userId: string, hotelRoomId: string): Promise<null | {_id: string}> {
-  const query = `*[_type == 'review' && user._ref == $userId && hotelRoom._ref == $hoterRoomId][0] {
+  const query = `*[_type == 'review' && user._ref == $userId && hotelRoom._ref == $hotelRoomId][0] {
   _id
   }`;
 

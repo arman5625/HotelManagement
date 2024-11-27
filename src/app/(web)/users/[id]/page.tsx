@@ -64,6 +64,19 @@ const UserDetails = (props: { params: Promise<{ id: string }> }) => {
     if(!ratingText.trim().length || !ratingValue) {
       return toast.error("pleasea provide a rating text and a rating");
     }
+
+    if(!roomId) toast.error('Id not provided');
+
+    try{
+      const {data} = await axios.post("/api/users", {
+        reviewText: ratingText, ratingValue,roomId
+      })
+
+    }catch(error){
+      console.log(error)
+      toast.error('Review Failed')
+    }
+
     // setIsSubmittingReview(true);
 
   }

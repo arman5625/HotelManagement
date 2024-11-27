@@ -39,7 +39,7 @@ export async function POST(req: Request, res:Response) {
         // check if already exists
         const alreadyExists = await checkReviewExists(userId, roomId);
 
-        console.log(alreadyExists);
+        console.log("alreadyExists", alreadyExists);
 
     }catch(error: any) {
         console.log("Error updating", error)
