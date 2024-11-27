@@ -2,7 +2,7 @@ import { authOptions } from "@/src/libs/auth"
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server";
 
-import { checkReviewExists, getUserData } from "@/src/libs/api";
+import { checkReviewExists, CreateReview, getUserData, updateReview } from "@/src/libs/api";
 
 
 export async function GET(req: Request, res:Response) {
@@ -39,7 +39,15 @@ export async function POST(req: Request, res:Response) {
         // check if already exists
         const alreadyExists = await checkReviewExists(userId, roomId);
 
-        console.log("alreadyExists", alreadyExists);
+        let data;
+
+        if(alreadyExists) {
+            data = await updateReview({reviewId: alreadyExists._id, reviewText, userRating: ratingValue});
+        } else {
+            data = await CreateReview({hotelRoomId: roomId, reviewText, userRating: ratingValue, userId});
+        }
+
+        return NextResponse.json(data, {status: 200, statusText: "successfull"})
 
     }catch(error: any) {
         console.log("Error updating", error)

@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { getStripe } from "@/src/libs/stripe";
 import React from "react";
+import RoomReview from "@/src/components/RoomReview/RoomReview";
 
 const RoomDetails = (props: { params: Promise<{ slug: string }> }) => {
   const { params } = props;
@@ -163,10 +164,12 @@ const RoomDetails = (props: { params: Promise<{ slug: string }> }) => {
                </div>
 
                <div className="shadow dark:shadow-white rounded-lg p-6">
-                <p className="md:text-lg font-semibold">Customer Reviews</p>
+                <div className="items-center mb-4">
+                   <p className="md:text-lg font-semibold">Customer Reviews</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <RoomReview roomId={room._id}/>
                </div>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Reviews */}
                </div>
             </div>
           </div>
