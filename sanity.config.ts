@@ -6,10 +6,8 @@ import {schemaTypes} from './schemaTypes'
 export default defineConfig({
   name: 'default',
   title: 'hotel-management',
-  projectId: '7wz0m8y2',
-  dataset: 'production',
-  // projectId: process.env.NEXT_PUBLICY_SANITY_PROJECT_ID as string ,
-  // dataset: process.env.NEXT_PUBLIC_SANITY_PROJECT_DATASET as string ,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID as string ,
+  dataset: process.env.NEXT_PUBLIC_SANITY_PROJECT_DATASET as string ,
 
   basePath: "/studio",
 
