@@ -2,7 +2,7 @@ import axios from 'axios';
 import {FC} from 'react' ;
 import useSWR from 'swr';
 import React from 'react'
-import review from '@/schemaTypes/review';
+
 import { Review } from '@/src/models/review';
 import Rating from '../Rating/Rating';
 

@@ -15,7 +15,7 @@ const Search:FC<Props> = ({
     setRoomTypeFilter,
     setSearchQuery,
 }) => {
-    const router = typeof window !== 'undefined' ? useRouter() : null;
+    const router =  useRouter();
 
    const handleSearchQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);

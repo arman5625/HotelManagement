@@ -10,7 +10,7 @@ const stripe = new Stripe(process.env.stripe_secret_key as string, {
     apiVersion: '2024-11-20.acacia',
 });
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
     const reqBody = await req.text();
     const sig = req.headers.get("stripe-signature");
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
@@ -21,8 +21,9 @@ export async function POST(req: Request, res: Response) {
         if(!sig || !webhookSecret) return ;
         event = stripe.webhooks.constructEvent(reqBody, sig, webhookSecret);
 
-    }catch(error: any) {
-        return new NextResponse(`Webhook Error: ${error.message}`, {status: 500})
+    }catch(error) {
+        console.log("webhook error",error)
+        return new NextResponse(`Webhook Error`, {status: 500})
     }
 
 
@@ -32,27 +33,9 @@ export async function POST(req: Request, res: Response) {
             const session = event.data.object;
         
             const {
-                
-                metadata: {
-                // @ts-ignore
-                adults,
-                // @ts-ignore
-                checkinDate,
-                // @ts-ignore
-                checkoutDate,
-                // @ts-ignore
-                children,
-                // @ts-ignore
-                hotelRoom,
-                // @ts-ignore
-                numberOfDays,
-                // @ts-ignore
-                user,
-                // @ts-ignore
-                discount,
-                // @ts-ignore
-                totalPrice
-                },
+                //@ts-expect-error metadata not known
+                metadata: {adults,checkinDate,checkoutDate,children,hotelRoom,numberOfDays,user,discount,totalPrice},
+
             } = session;
 
             // create a booking
@@ -60,7 +43,7 @@ export async function POST(req: Request, res: Response) {
                 adults: Number(adults), 
                 checkinDate,
                 checkoutDate,
-                children: Number(Children),
+                children: Number(children),
                 hotelRoom,
                 numberOfDays: Number(numberOfDays),
                 discount: Number(discount),

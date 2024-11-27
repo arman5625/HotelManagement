@@ -1,4 +1,3 @@
-import hotelRoom from "@/schemaTypes/hotelRoom";
 import { getRoom } from "@/src/libs/api";
 import { authOptions } from "@/src/libs/auth";
 import { getServerSession } from "next-auth";
@@ -19,7 +18,7 @@ type RequestData = {
     hotelRoomSlug: string;
 }
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
     const {
         checkinDate,
         adults,
@@ -91,8 +90,8 @@ export async function POST(req: Request, res: Response) {
             status: 200,
             statusText: 'Payment session created'
         });
-    }catch(error : any) {
+    }catch(error) {
         console.log('payment failed', error);
-        return new NextResponse(error, {status: 500});
+        return new NextResponse("Payment failed", {status: 500});
     }
 }
