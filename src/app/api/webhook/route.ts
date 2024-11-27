@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Children } from "react";
 import Stripe from "stripe";
 
 import { createBooking, updateHotelRoom } from "@/src/libs/api";
