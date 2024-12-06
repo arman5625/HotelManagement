@@ -7,12 +7,12 @@ import sanityClient from "./sanity";
 export const authOptions: NextAuthOptions ={
     providers: [
         GithubProvider({
-            clientId: process.env.GIT_HUB_CLIENT_ID as string,
-            clientSecret: process.env.GIT_HUB_CLIENT_SECRET as string,
+            clientId: process.env.GITHUB_CLIENT_ID as string,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         }),
         GoogleProvider({
-            clientId: process.env.GIT_HUB_CLIENT_ID as string,
-            clientSecret: process.env.GIT_HUB_CLIENT_SECRET as string,
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
         SanityCredentials(sanityClient),
     ],

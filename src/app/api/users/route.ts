@@ -12,6 +12,7 @@ export async function GET() {
         return new NextResponse("Authentication Required", {status: 401});
     }
     const userId = session.user.id;
+    console.log("session",session);
     try{
         const data = await getUserData(userId);
         return NextResponse.json(data,{status: 200, statusText: 'Successfull'});
