@@ -1,6 +1,6 @@
 export {default} from "next-auth/middleware"
 
 export const config ={
-    matcher: ["/users/:path*", "/api/(?!webhook)(:path*)"],
+    matcher: ["/users/:path*"],
 
 }
